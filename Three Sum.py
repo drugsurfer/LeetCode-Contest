@@ -1,23 +1,22 @@
 def threeSum(nums : list):
-    # [-1,0,1,2,-1,-4]
-    '''
-    
-    '''
     result = []
-    hashMapThree = {}
-    for i, x in enumerate(nums):
-        target = -x
-        # twoSum
-        hashMapTwo, temp = {}, []
-        for j, n in enumerate(nums[i + 1:]):
-            diff = target - n
-            if diff in hashMapTwo:
-                temp.append([nums[i + 1:][hashMapTwo[diff]], nums[i + 1:][j]])
-            hashMapTwo[n] = j
-        if len(temp) != 0:
-            for sum_ in temp:
-                if sorted([x] + sum_) not in result:
-                    result.append(sorted([x] + sum_))
+    nums.sort()
+    for i, value in enumerate(nums):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        l, r = i + 1, len(nums) - 1
+        while l < r:
+            threeSum = value + nums[l] + nums[r]
+            if threeSum > 0:
+                r -= 1
+            elif threeSum < 0:
+                l += 1
+            else:
+                result.append([value, nums[l], nums[r]])
+                l += 1
+                while nums[l] == nums[l - 1]:
+                    l += 1
     return result
 
-print(threeSum([0]))
+
+print(threeSum([-1,0,1,2,-1,-4]))
